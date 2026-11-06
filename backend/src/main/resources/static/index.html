@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerTrack Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>CareerTrack</h2>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#applications">Applications</a>
+        <a href="#interviews">Interviews</a>
+    </div>
+
+    <div class="main-content" id="dashboard">
+
+        <header>
+            <div>
+                <h1>Application Dashboard</h1>
+                <p>Manage your job and internship applications.</p>
+            </div>
+            <button id="openForm">+ Add Application</button>
+        </header>
+
+        <section class="stats">
+            <div class="card">
+                <h3>Total Applications</h3>
+                <h2 id="totalCount">0</h2>
+            </div>
+
+            <div class="card">
+                <h3>In Progress</h3>
+                <h2 id="progressCount">0</h2>
+            </div>
+
+            <div class="card">
+                <h3>Interviews</h3>
+                <h2 id="interviewCount">0</h2>
+            </div>
+
+            <div class="card">
+                <h3>Offers</h3>
+                <h2 id="offerCount">0</h2>
+            </div>
+        </section>
+
+        <section class="applications" id="applications">
+            <h2>Your Applications</h2>
+
+            <div class="filters">
+                <input type="text" id="searchInput"
+                       placeholder="Search company or role...">
+
+                <select id="statusFilter">
+                    <option value="All">All Statuses</option>
+                    <option value="Saved">Saved</option>
+                    <option value="Applied">Applied</option>
+                    <option value="Under Review">Under Review</option>
+                    <option value="Interview">Interview</option>
+                    <option value="Offer">Offer</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>Role</th>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="applicationRows"></tbody>
+            </table>
+
+            <p id="emptyState">No applications found.</p>
+        </section>
+
+        <section class="applications" id="interviews">
+            <h2>Upcoming Interviews</h2>
+            <div id="interviewList"></div>
+        </section>
+
+    </div>
+
+    <div class="modal" id="applicationModal">
+        <div class="modal-content">
+            <h2>Add New Application</h2>
+
+            <form id="applicationForm">
+
+                <input type="text" name="company"
+                       placeholder="Company Name" required>
+
+                <input type="text" name="role"
+                       placeholder="Job Role" required>
+
+                <select name="type">
+                    <option>Internship</option>
+                    <option>Full Time</option>
+                    <option>Part-time</option>
+                </select>
+
+                <select name="status">
+                    <option>Saved</option>
+                    <option>Applied</option>
+                    <option>Under Review</option>
+                    <option>Interview</option>
+                    <option>Offer</option>
+                    <option>Rejected</option>
+                </select>
+
+                <label>Date Applied</label>
+                <input type="date" name="date" required>
+
+                <label>Interview Date (Optional)</label>
+                <input type="date" name="interviewDate">
+
+                <textarea name="notes"
+                          placeholder="Additional notes"></textarea>
+
+                <button type="submit">Save Application</button>
+                <button type="button" id="closeForm"
+                        class="cancel">Cancel</button>
+
+            </form>
+        </div>
+    </div>
+
+<script>
+async function checkBackend() {
+    try {
+        const response = await fetch("http://localhost:8080/api/health");
+        const message = await response.text();
+        console.log("Backend Status:", message);
+    } catch (error) {
+        console.error("Backend Connection Failed:", error);
+    }
+}
+
+checkBackend();
+</script>
+
+    <script src="script.js"></script>
+</body>
+</html>
